@@ -1,10 +1,10 @@
-#ifndef _CIRCLE_H_INCLUDED
-#define _CIRCLE_H_INCLUDED
+#ifndef _CIRCLE_HPP_INCLUDED
+#define _CIRCLE_HPP_INCLUDED
 
-#include "../math/vector2.h"
-#include "../graphics/renderer.h"
-#include "../graphics/coordinate_system.h"
-#include "shape.h"
+#include "../math/vector2.hpp"
+#include "../graphics/renderer.hpp"
+#include "../graphics/coordinate_system.hpp"
+#include "shape.hpp"
 
 class Circle : public Shape
 {
@@ -16,4 +16,4 @@ public:
     virtual void Draw(Renderer* renderer, CoordinateSystem* system) override;
 };
 
-#endif /* _CIRCLE_H_INCLUDED */
+#endif /* _CIRCLE_HPP_INCLUDED */

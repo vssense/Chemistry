@@ -1,3 +1,6 @@
+#ifndef _SWAP_HPP_INCLUDED
+#define _SWAP_HPP_INCLUDED
+
 template<typename T>
 void Swap(T* lhs, T* rhs)
 {
@@ -8,3 +11,5 @@ void Swap(T* lhs, T* rhs)
     *lhs = *rhs;
     *rhs = tmp;
 }
+
+#endif /* _SWAP_HPP_INCLUDED */

@@ -13,10 +13,10 @@ CppSrc  = $(notdir $(wildcard $(SrcDir)/*.cpp))     \
 		  $(notdir $(wildcard $(ShapesDir)/*.cpp))  \
 		  $(notdir $(wildcard $(GraphicsDir)/*.cpp))
 
-Headers = $(wildcard $(SrcDir)/*.h)     \
-		  $(wildcard $(MathDir)/*.h)    \
-		  $(wildcard $(ShapesDir)/*.h)  \
-		  $(wildcard $(GraphicsDir)/*.h)
+Headers = $(wildcard $(SrcDir)/*.hpp)     \
+		  $(wildcard $(MathDir)/*.hpp)    \
+		  $(wildcard $(ShapesDir)/*.hpp)  \
+		  $(wildcard $(GraphicsDir)/*.hpp)
 
 Intermediates = $(addprefix $(BinDir)/, $(CppSrc:.cpp=.o))
 

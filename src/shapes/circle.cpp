@@ -1,4 +1,4 @@
-#include "circle.h"
+#include "circle.hpp"
 
 void Circle::Draw(Renderer* renderer, CoordinateSystem* system)
 {

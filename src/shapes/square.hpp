@@ -1,10 +1,10 @@
-#ifndef _SQUARE_H_INCLUDED
-#define _SQUARE_H_INCLUDED
+#ifndef _SQUARE_HPP_INCLUDED
+#define _SQUARE_HPP_INCLUDED
 
-#include "../math/vector2.h"
-#include "../graphics/renderer.h"
-#include "../graphics/coordinate_system.h"
-#include "shape.h"
+#include "../math/vector2.hpp"
+#include "../graphics/renderer.hpp"
+#include "../graphics/coordinate_system.hpp"
+#include "shape.hpp"
 
 class Square : public Shape
 {
@@ -17,4 +17,4 @@ public:
 };
 
 
-#endif /* _SQUARE_H_INCLUDED */
+#endif /* _SQUARE_HPP_INCLUDED */

@@ -1,7 +1,7 @@
-#ifndef _RENDERER_H_INCLUDED
-#define _RENDERER_H_INCLUDED
+#ifndef _RENDERER_HPP_INCLUDED
+#define _RENDERER_HPP_INCLUDED
 
-#include "window.h"
+#include "window.hpp"
 
 const uint32_t kBlack       = 0x00'00'00'00;
 const uint32_t kWhite       = 0x00'FF'FF'FF;
@@ -50,4 +50,4 @@ private:
 };
 
 
-#endif /* _RENDERER_H_INCLUDED */
+#endif /* _RENDERER_HPP_INCLUDED */

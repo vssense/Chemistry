@@ -1,5 +1,5 @@
-#include "renderer.h"
-#include "coordinate_system.h"
+#include "renderer.hpp"
+#include "coordinate_system.hpp"
 
 uint8_t  GetB(uint32_t color);
 uint8_t  GetG(uint32_t color);

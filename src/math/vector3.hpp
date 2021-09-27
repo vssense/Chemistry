@@ -1,5 +1,5 @@
-#ifndef _VECTOR3_H_INCLUDED
-#define _VECTOR3_H_INCLUDED
+#ifndef _VECTOR3_HPP_INCLUDED
+#define _VECTOR3_HPP_INCLUDED
 
 #include <assert.h>
 
@@ -107,4 +107,4 @@ void Vec3<T>::Normalize()
     }
 }
 
-#endif /* _VECTOR3_H_INCLUDED */
+#endif /* _VECTOR3_HPP_INCLUDED */

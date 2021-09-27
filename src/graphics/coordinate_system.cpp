@@ -1,4 +1,4 @@
-#include "coordinate_system.h"
+#include "coordinate_system.hpp"
 
 float CoordinateSystem::ConvertXCoordinate(float x)
 {

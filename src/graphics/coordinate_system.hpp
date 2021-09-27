@@ -1,9 +1,9 @@
-#ifndef _COORDINATE_SYSTEM_H_INCLUDED
-#define _COORDINATE_SYSTEM_H_INCLUDED
+#ifndef _COORDINATE_SYSTEM_HPP_INCLUDED
+#define _COORDINATE_SYSTEM_HPP_INCLUDED
 
 #include <math.h>
 
-#include "renderer.h"
+#include "renderer.hpp"
 
 const float kStep = 0.01;
 
@@ -34,4 +34,4 @@ private:
     Range y_axis_range_;
 };
 
-#endif /* _COORDINATE_SYSTEM_H_INCLUDED */
+#endif /* _COORDINATE_SYSTEM_HPP_INCLUDED */

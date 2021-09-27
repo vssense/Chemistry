@@ -1,8 +1,8 @@
-#include "graphics/window.h"
-#include "graphics/renderer.h"
-#include "graphics/coordinate_system.h"
-#include "shapes/circle.h"
-#include "shapes/square.h"
+#include "graphics/window.hpp"
+#include "graphics/renderer.hpp"
+#include "graphics/coordinate_system.hpp"
+#include "shapes/circle.hpp"
+#include "shapes/square.hpp"
 
 const float kCoordinateSystemWidth  = 100;
 const float kCoordinateSystemHeight = 100;

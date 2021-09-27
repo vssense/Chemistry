@@ -1,5 +1,5 @@
-#ifndef _VECTOR2_H_INCLUDED
-#define _VECTOR2_H_INCLUDED
+#ifndef _VECTOR2_HPP_INCLUDED
+#define _VECTOR2_HPP_INCLUDED
 
 #include <assert.h>
 
@@ -102,4 +102,4 @@ void Vec2<T>::Normalize()
     }
 }
 
-#endif /* _VECTOR2_H_INCLUDED */
+#endif /* _VECTOR2_HPP_INCLUDED */
