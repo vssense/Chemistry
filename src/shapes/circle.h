@@ -1,5 +1,5 @@
-#ifndef _MOLECULE_H_INCLUDED
-#define _MOLECULE_H_INCLUDED
+#ifndef _CIRCLE_H_INCLUDED
+#define _CIRCLE_H_INCLUDED
 
 #include "../math/vector2.h"
 #include "../graphics/renderer.h"
@@ -16,4 +16,4 @@ public:
     virtual void Draw(Renderer* renderer, CoordinateSystem* system) override;
 };
 
-#endif /* _MOLECULE_H_INCLUDED */
+#endif /* _CIRCLE_H_INCLUDED */

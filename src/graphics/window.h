@@ -9,7 +9,7 @@
 
 #include <SDL2/SDL.h>
 
-const size_t kWindowHeight = 768;
+const size_t kWindowHeight = 1024;
 const size_t kWindowWidth  = 1024;
 const size_t kTitleSize    = 10;
 

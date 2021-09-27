@@ -2,6 +2,7 @@
 #include "graphics/renderer.h"
 #include "graphics/coordinate_system.h"
 #include "shapes/circle.h"
+#include "shapes/square.h"
 
 const float kCoordinateSystemWidth  = 100;
 const float kCoordinateSystemHeight = 100;
@@ -14,7 +15,8 @@ int main()
     CoordinateSystem system({ 0, kCoordinateSystemWidth },
                             { 0, kCoordinateSystemHeight },
                             { 50, 50, kWindowWidth - 100, kWindowHeight - 100 });
-    Circle molecule({ 50, 50 }, 5);
+    Circle molecule1({ 50, 50 }, 5);
+    Square molecule2({ 10, 10 }, 9 * sqrt(2));
     bool is_running = true;
 
     while (is_running)
@@ -34,7 +36,9 @@ int main()
 
         renderer.SetColor(kWhite);
         renderer.FillRect(system.GetRectangle());
-        molecule.Draw(&renderer, &system);
+
+        molecule1.Draw(&renderer, &system);
+        molecule2.Draw(&renderer, &system);
 
         renderer.Present();
 
