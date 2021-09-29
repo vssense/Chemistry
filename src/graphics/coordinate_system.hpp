@@ -25,8 +25,6 @@ public:
     float ConvertYProjection(float x);
 
     const Rectangle& GetRectangle () const { return rect_; }
-    const Range&     GetXAxisRange() const { return x_axis_range_; }
-    const Range&     GetYAxisRange() const { return y_axis_range_; }
 
 private:
     Rectangle rect_;

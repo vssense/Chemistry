@@ -1,4 +1,6 @@
 #include "circle.hpp"
+#include "../graphics/renderer.hpp"
+#include "../graphics/coordinate_system.hpp"
 
 void Circle::Draw(Renderer* renderer, CoordinateSystem* system)
 {

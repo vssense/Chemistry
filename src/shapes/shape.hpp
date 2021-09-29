@@ -1,6 +1,9 @@
 #ifndef _SHAPE_H_INCLUDED
 #define _SHAPE_H_INCLUDED
 
+#include "../graphics/renderer.hpp"
+#include "../math/vector2.hpp"
+
 class Shape
 {
 protected:
@@ -13,8 +16,8 @@ protected:
 
     Shape(ShapeType type, Point center, float radius, Vec2<float> speed) :
           type_(type), center_(center), radius_(radius), speed_(speed) {}
-    virtual ~Shape() {}
 public:
+    virtual ~Shape() {}
     virtual void Draw(Renderer* renderer, CoordinateSystem* system) = 0;
     // virtual void Move();
 

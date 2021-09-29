@@ -1,4 +1,6 @@
 #include "square.hpp"
+#include "../graphics/renderer.hpp"
+#include "../graphics/coordinate_system.hpp"
 
 void Square::Draw(Renderer* renderer, CoordinateSystem* system)
 {

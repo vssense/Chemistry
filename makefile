@@ -7,23 +7,29 @@ BinDir = bin
 MathDir = $(SrcDir)/math
 ShapesDir = $(SrcDir)/shapes
 GraphicsDir = $(SrcDir)/graphics
+ManagerDir = $(SrcDir)/manager
+ListDir = $(SrcDir)/list
 
 CppSrc  = $(notdir $(wildcard $(SrcDir)/*.cpp))     \
 		  $(notdir $(wildcard $(MathDir)/*.cpp))    \
 		  $(notdir $(wildcard $(ShapesDir)/*.cpp))  \
-		  $(notdir $(wildcard $(GraphicsDir)/*.cpp))
+		  $(notdir $(wildcard $(GraphicsDir)/*.cpp))\
+		  $(notdir $(wildcard $(ManagerDir)/*.cpp)) \
+		  $(notdir $(wildcard $(ListDir)/*.cpp))
 
 Headers = $(wildcard $(SrcDir)/*.hpp)     \
 		  $(wildcard $(MathDir)/*.hpp)    \
 		  $(wildcard $(ShapesDir)/*.hpp)  \
-		  $(wildcard $(GraphicsDir)/*.hpp)
+		  $(wildcard $(GraphicsDir)/*.hpp)\
+		  $(wildcard $(ManagerDir)/*.hpp) \
+		  $(wildcard $(ListDir)/*.hpp)
 
 Intermediates = $(addprefix $(BinDir)/, $(CppSrc:.cpp=.o))
 
 chemistry: $(Intermediates)
 	g++ -o chemistry $(Intermediates) $(LXXFLAGS)
 
-vpath %.cpp $(SrcDir) $(MathDir) $(ShapesDir) $(GraphicsDir)
+vpath %.cpp $(SrcDir) $(MathDir) $(ShapesDir) $(GraphicsDir) $(ManagerDir) $(ListDir)
 $(BinDir)/%.o: %.cpp $(Headers)
 	g++ -c $< $(CXXFLAGS) -o $@
 

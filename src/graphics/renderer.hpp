@@ -26,6 +26,8 @@ struct Point
 {
 	float x;
 	float y;
+
+    Point(float new_x, float new_y) : x(new_x), y(new_y) {}
 };
 
 class CoordinateSystem;
