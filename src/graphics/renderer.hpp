@@ -2,6 +2,7 @@
 #define _RENDERER_HPP_INCLUDED
 
 #include "window.hpp"
+#include "../math/vector2.hpp"
 
 const uint32_t kBlack       = 0x00'00'00'00;
 const uint32_t kWhite       = 0x00'FF'FF'FF;
@@ -22,14 +23,6 @@ struct Rectangle
     float h;
 };
 
-struct Point
-{
-	float x;
-	float y;
-
-    Point(float new_x, float new_y) : x(new_x), y(new_y) {}
-};
-
 class CoordinateSystem;
 
 class Renderer
@@ -39,7 +32,7 @@ public:
     ~Renderer();
 
     void DrawLine(float x1, float y1, float x2, float y2);
-    void DrawCircle(Point center, float radius);
+    void DrawCircle(Vec2<float> center, float radius);
     void FillRect(const Rectangle& rect);
     void SetPixel(float x, float y);
     void SetColor(uint32_t color);

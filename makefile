@@ -1,4 +1,4 @@
-CXXFLAGS = -Wall -Wextra -pedantic $(shell pkg-config --cflags sdl2)
+CXXFLAGS = -Wall -Wextra -pedantic $(shell pkg-config --cflags sdl2) -O2
 LXXFLAGS = $(shell pkg-config --libs sdl2)
 
 SrcDir = src
@@ -30,7 +30,7 @@ chemistry: $(Intermediates)
 	g++ -o chemistry $(Intermediates) $(LXXFLAGS)
 
 vpath %.cpp $(SrcDir) $(MathDir) $(ShapesDir) $(GraphicsDir) $(ManagerDir) $(ListDir)
-$(BinDir)/%.o: %.cpp $(Headers)
+$(BinDir)/%.o: %.cpp $(Headers) makefile
 	g++ -c $< $(CXXFLAGS) -o $@
 
 .PHONY: init

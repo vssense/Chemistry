@@ -18,6 +18,25 @@ void ShapeManager::DrawShapes()
     }
 }
 
+void ShapeManager::MoveShapes(float dt)
+{
+    for (auto i = shapes.Begin(); i != shapes.End(); ++i)
+    {
+        auto j = i;
+        ++j;
+        for (; j != shapes.End(); ++j)
+        {
+            collide_func[(*i)->GetType()][(*j)->GetType()](*i, *j);
+        }
+    }
+
+    for (auto it = shapes.Begin(); it != shapes.End(); ++it)
+    {
+        (*it)->Move(dt);
+        (*it)->CollideFrame(system_);
+    }
+}
+
 void ShapeManager::DrawFrame()
 {
     renderer_->SetColor(kWhite);

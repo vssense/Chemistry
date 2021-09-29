@@ -23,7 +23,7 @@ void Renderer::DrawLine(float x1, float y1, float x2, float y2)
     assert(!SDL_RenderDrawLineF(renderer_, x1, y1, x2, y2));
 }
 
-void Renderer::DrawCircle(Point center, float radius)
+void Renderer::DrawCircle(Vec2<float> center, float radius)
 {
     assert(radius >= 0);
 

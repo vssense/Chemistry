@@ -42,6 +42,12 @@ float operator*(const Vec2<T>& lhs, const Vec2<T>& rhs)
 }
 
 template <typename T>
+Vec2<T> operator*(float lhs, Vec2<T> rhs)
+{
+    return rhs *= lhs;
+}
+
+template <typename T>
 Vec2<T>& Vec2<T>::operator+=(const Vec2& vec)
 {
     x += vec.x;

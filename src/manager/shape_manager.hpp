@@ -3,6 +3,12 @@
 
 #include "../shapes/shape.hpp"
 #include "../list/list.hpp"
+#include "../math/swap.hpp"
+#include "../shapes/circle.hpp"
+
+typedef void (*CollideFunc)(Shape*, Shape*);
+
+#include "shape_collide.hpp"
 
 class ShapeManager
 {
@@ -21,8 +27,15 @@ public:
 
     void DrawShapes();
     void DrawFrame();
+    void MoveShapes(float dt);
 
 private:
+    const CollideFunc collide_func[Shape::ShapeNumTypes][Shape::ShapeNumTypes] =
+    {
+        { (CollideFunc)Collide, (CollideFunc)Collide },
+        { (CollideFunc)Collide, (CollideFunc)Collide }
+    };
+
     Renderer* renderer_;
     CoordinateSystem* system_;
     List<Shape*> shapes;

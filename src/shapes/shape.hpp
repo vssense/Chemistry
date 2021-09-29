@@ -6,28 +6,31 @@
 
 class Shape
 {
-protected:
+public:
     enum ShapeType
     {
         CircleType,
         SquareType,
-        TriangleType
+
+        ShapeNumTypes
     };
 
-    Shape(ShapeType type, Point center, float radius, Vec2<float> speed) :
-          type_(type), center_(center), radius_(radius), speed_(speed) {}
-public:
+    Shape(ShapeType type, Vec2<float> center, float radius, Vec2<float> speed, uint32_t color) :
+          type_(type), center_(center), radius_(radius), speed_(speed), color_(color) {}
+
     virtual ~Shape() {}
     virtual void Draw(Renderer* renderer, CoordinateSystem* system) = 0;
-    // virtual void Move();
+    virtual void CollideFrame(CoordinateSystem* system) = 0;    
+    virtual void Move(float dt) = 0;
 
-    // ShapeType GetType  () const { return type_; }
+    ShapeType GetType  () { return type_; }
 
 protected:
     ShapeType type_;
-    Point center_;
+    Vec2<float> center_;
     float radius_;
     Vec2<float> speed_;
+    uint32_t color_;
 };
 
 #endif /* _SHAPE_H_INCLUDED */

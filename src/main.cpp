@@ -15,12 +15,13 @@ int main()
 
     CoordinateSystem system({ 0, kCoordinateSystemWidth },
                             { 0, kCoordinateSystemHeight },
-                            { 50, 50, kWindowWidth - 100, kWindowHeight - 100 });
+                            { 0, 0, kWindowWidth, kWindowHeight });
 
     ShapeManager manager(&renderer, &system);
 
-    manager.AddShape<Circle>(Point(50.0, 50.0), 5);
-    manager.AddShape<Square>(Point(10, 10), 9 * sqrt(2));
+    manager.AddShape<Circle>(Vec2<float>(50, 50), 5, Vec2<float>(1, 2), kLightPurple);
+    manager.AddShape<Circle>(Vec2<float>(40, 60), 5, Vec2<float>(1, 1.1));
+    manager.AddShape<Square>(Vec2<float>(10, 10), 9, Vec2<float>(2, 1));
 
     bool is_running = true;
 
@@ -35,16 +36,17 @@ int main()
             }
         }
 
-        // clock_t start = clock();
+        clock_t start = clock();
 
         renderer.Clear();
 
         manager.DrawFrame();
         manager.DrawShapes();
+        manager.MoveShapes(0.05);
 
         renderer.Present();
 
-        // window.SetTitleFPS(CLOCKS_PER_SEC / (clock() - start + 1));
+        window.SetTitleFPS(CLOCKS_PER_SEC / (clock() - start + 1));
     }
 
     SDL_Quit();
