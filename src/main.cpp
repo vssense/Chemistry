@@ -7,7 +7,11 @@
 
 const float kCoordinateSystemWidth  = 100;
 const float kCoordinateSystemHeight = 100;
-
+// TODO: 1. add chemical reactions
+//       2. add event manager
+//       3. add buttons
+//       4. add graphics
+//       5. ShapeManeger : public Shape
 int main()
 {
     Window window{};

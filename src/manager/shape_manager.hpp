@@ -30,7 +30,7 @@ public:
     void MoveShapes(float dt);
 
 private:
-    const CollideFunc collide_func[Shape::ShapeNumTypes][Shape::ShapeNumTypes] =
+    const CollideFunc collide[Shape::ShapeNumTypes][Shape::ShapeNumTypes] =
     {
         { (CollideFunc)Collide, (CollideFunc)Collide },
         { (CollideFunc)Collide, (CollideFunc)Collide }

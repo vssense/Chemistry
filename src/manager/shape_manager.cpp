@@ -20,13 +20,13 @@ void ShapeManager::DrawShapes()
 
 void ShapeManager::MoveShapes(float dt)
 {
-    for (auto i = shapes.Begin(); i != shapes.End(); ++i)
+    for (auto first = shapes.Begin(); first != shapes.End(); ++first)
     {
-        auto j = i;
-        ++j;
-        for (; j != shapes.End(); ++j)
+        auto second = first;
+        ++second;
+        for (; second != shapes.End(); ++second)
         {
-            collide_func[(*i)->GetType()][(*j)->GetType()](*i, *j);
+            collide[(*first)->GetType()][(*second)->GetType()](*first, *second);
         }
     }
 

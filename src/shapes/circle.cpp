@@ -24,7 +24,7 @@ void Circle::CollideFrame(CoordinateSystem* system)
         speed_.x = -speed_.x;
     }
 
-    if (system->GetYAxisRange().min >= center_.y - radius_ ||
+    if (system->GetYAxisRange().min >= center_.y - radius_ ||       //FIXME: Check speed vector direction
         system->GetYAxisRange().max <= center_.y + radius_)
     {
         speed_.y = -speed_.y;
