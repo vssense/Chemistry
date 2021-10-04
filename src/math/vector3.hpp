@@ -49,6 +49,12 @@ Vec3<T> operator*(float lhs, Vec3<T> rhs)
 }
 
 template <typename T>
+Vec3<T> operator/(Vec3<T> lhs, float rhs)
+{
+    return lhs /= rhs;
+}
+
+template <typename T>
 Vec3<T>& Vec3<T>::operator+=(const Vec3& vec)
 {
     x += vec.x;

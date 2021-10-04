@@ -23,9 +23,13 @@ int main()
 
     ShapeManager manager(&renderer, &system);
 
-    manager.AddShape<Circle>(Vec2<float>(50, 50), 5, Vec2<float>(1, 2), kLightPurple);
-    manager.AddShape<Circle>(Vec2<float>(40, 60), 5, Vec2<float>(1, 1.1));
-    manager.AddShape<Square>(Vec2<float>(10, 10), 9, Vec2<float>(2, 1));
+    manager.AddShape<Square>(Vec2<float>(10, 10), 7, Vec2<float>(1, 1), kLightYellow, 14);
+    manager.AddShape<Square>(Vec2<float>(80, 80), 6, Vec2<float>(-1, -1), kLightYellow, 12);
+
+    // for (int i = 0; i < 15; ++i)
+    // {
+    //     manager.AddShape<Circle>(Vec2<float>(10 + 4 * i, 10 + 4 * i), 1, Vec2<float>((rand() % 3) - 1, (rand() % 3) - 1));
+    // }
 
     bool is_running = true;
 
@@ -40,17 +44,16 @@ int main()
             }
         }
 
-        clock_t start = clock();
+        // clock_t start = clock();
 
         renderer.Clear();
 
         manager.DrawFrame();
         manager.DrawShapes();
-        manager.MoveShapes(0.05);
+        manager.MoveShapes(0.005);
 
         renderer.Present();
-
-        window.SetTitleFPS(CLOCKS_PER_SEC / (clock() - start + 1));
+        // window.SetTitleFPS(CLOCKS_PER_SEC / (clock() - start + 1));
     }
 
     SDL_Quit();

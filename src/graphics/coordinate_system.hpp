@@ -4,6 +4,7 @@
 #include <math.h>
 
 #include "renderer.hpp"
+#include "../math/vector2.hpp"
 
 const float kStep = 0.01;
 
@@ -23,6 +24,7 @@ public:
     float ConvertYCoordinate(float y);
     float ConvertXProjection(float x);
     float ConvertYProjection(float x);
+    Vec2<float> CrossOver(Vec2<float> point);
 
     const Rectangle& GetRectangle () const { return rect_; }
     const Range&     GetXAxisRange() const { return x_axis_range_; }

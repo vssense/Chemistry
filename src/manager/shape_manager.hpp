@@ -5,10 +5,21 @@
 #include "../list/list.hpp"
 #include "../math/swap.hpp"
 #include "../shapes/circle.hpp"
+#include "../shapes/square.hpp"
 
-typedef void (*CollideFunc)(Shape*, Shape*);
+class ShapeManager;
 
-#include "shape_collide.hpp"
+struct CollisionInfo
+{
+    ShapeManager* manager;
+    List<Shape*>::Iterator first;
+    List<Shape*>::Iterator second;
+};
+
+typedef bool (*DetectCollisionFunc)(Shape*, Shape*);
+typedef void (*ResponseCollisionFunc)(CollisionInfo&);
+
+#include "shape_collision.hpp"
 
 class ShapeManager
 {
@@ -21,24 +32,32 @@ public:
     Shape* AddShape(Args... args)
     {
         Shape* shape = new ShapeType(args...);
-        shapes.PushBack(shape);
+        shapes_.PushBack(shape);
         return shape;
     }
 
     void DrawShapes();
     void DrawFrame();
     void MoveShapes(float dt);
+    List<Shape*>& GetShapes() { return shapes_; }
+    CoordinateSystem* GetCoordinateSystem() { return system_; }
 
 private:
-    const CollideFunc collide[Shape::ShapeNumTypes][Shape::ShapeNumTypes] =
+    const DetectCollisionFunc DetectCollision[Shape::ShapeNumTypes][Shape::ShapeNumTypes] =
     {
-        { (CollideFunc)Collide, (CollideFunc)Collide },
-        { (CollideFunc)Collide, (CollideFunc)Collide }
+        {(DetectCollisionFunc)DetectCollisionCC, (DetectCollisionFunc)DetectCollisionCC},
+        {(DetectCollisionFunc)DetectCollisionCC, (DetectCollisionFunc)DetectCollisionCC}
+    };
+
+    const ResponseCollisionFunc ResponseCollision[Shape::ShapeNumTypes][Shape::ShapeNumTypes] =
+    {
+        {(ResponseCollisionFunc)ResponseCollisionCC, (ResponseCollisionFunc)ResponseCollisionCS},
+        {(ResponseCollisionFunc)ResponseCollisionSC, (ResponseCollisionFunc)ResponseCollisionSS}
     };
 
     Renderer* renderer_;
     CoordinateSystem* system_;
-    List<Shape*> shapes;
+    List<Shape*> shapes_;
 };
 
 #endif /* _SHAPE_MANAGER_HPP_INCLUDED */

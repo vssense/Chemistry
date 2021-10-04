@@ -52,12 +52,17 @@ public:
         {
             return node_->key;
         }
+
+        bool IsValid()
+        {
+            return node_ != nullptr;
+        }
         
         friend bool operator != (const Iterator& lhs, const Iterator& rhs)
         {
             if (lhs.node_ != nullptr && rhs.node_ != nullptr)
             {
-                return lhs.node_->key != rhs.node_->key;
+                return lhs.node_ != rhs.node_;
             }
 
             if (lhs.node_ == nullptr && rhs.node_ == nullptr)
@@ -69,7 +74,7 @@ public:
         }
 
         friend void List<T>::InsertAfter(const Iterator& it, const T& key); 
-        friend void List<T>::Erase(const Iterator& it); 
+        friend void List<T>::Erase(Iterator& it); 
     
     private:
         Node* node_;
@@ -77,7 +82,7 @@ public:
 
     void PushBack(const T& key);
     void InsertAfter(const Iterator& it, const T& key);
-    void Erase(const Iterator& it);
+    void Erase(Iterator& it);
 
     Iterator Begin()
     {
@@ -127,7 +132,7 @@ void List<T>::InsertAfter(const Iterator& it, const T& key)
 }
 
 template <typename T>
-void List<T>::Erase(const Iterator& it)
+void List<T>::Erase(Iterator& it)
 {
     assert(it.node_);
 
@@ -147,15 +152,18 @@ void List<T>::Erase(const Iterator& it)
     else if (node == tail_)
     {
         node->prev->next = nullptr;
-        tail_ = node;
+        tail_ = node->prev;
     }
     else
     {
+        assert(node->prev);
+        assert(node->next);
         node->prev->next = node->next;
         node->next->prev = node->prev;
     }
 
     delete node;
+    it.node_ = nullptr;
 }
 
 

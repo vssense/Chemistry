@@ -1,10 +1,12 @@
 #include "shape_manager.hpp"
 #include "../graphics/renderer.hpp"
 #include "../graphics/coordinate_system.hpp"
+#include <vector>
+
 
 ShapeManager::~ShapeManager()
 {
-    for (auto it = shapes.Begin(); it != shapes.End(); ++it)
+    for (auto it = shapes_.Begin(); it != shapes_.End(); ++it)
     {
         delete *it;
     }
@@ -12,7 +14,7 @@ ShapeManager::~ShapeManager()
 
 void ShapeManager::DrawShapes()
 {
-    for (auto it = shapes.Begin(); it != shapes.End(); ++it)
+    for (auto it = shapes_.Begin(); it != shapes_.End(); ++it)
     {
         (*it)->Draw(renderer_, system_);
     }
@@ -20,17 +22,30 @@ void ShapeManager::DrawShapes()
 
 void ShapeManager::MoveShapes(float dt)
 {
-    for (auto first = shapes.Begin(); first != shapes.End(); ++first)
+    std::vector<CollisionInfo> info;
+    for (auto first = shapes_.Begin(); first != shapes_.End(); ++first)
     {
         auto second = first;
         ++second;
-        for (; second != shapes.End(); ++second)
+        for (; second != shapes_.End(); ++second)
         {
-            collide[(*first)->GetType()][(*second)->GetType()](*first, *second);
+            if (DetectCollision[(*first)->GetType()][(*second)->GetType()](*first, *second))
+            {
+                info.push_back({this, first, second});
+            }
         }
     }
 
-    for (auto it = shapes.Begin(); it != shapes.End(); ++it)
+    for (size_t i = 0; i < info.size(); ++i)
+    {
+        // printf("%d %d\n", info[i].first.IsValid(), info[i].second.IsValid());
+        if (info[i].first.IsValid() && info[i].second.IsValid())
+        {
+            ResponseCollision[(*info[i].first)->GetType()][(*info[i].second)->GetType()](info[i]);
+        }
+    }
+
+    for (auto it = shapes_.Begin(); it != shapes_.End(); ++it)
     {
         (*it)->Move(dt);
         (*it)->CollideFrame(system_);

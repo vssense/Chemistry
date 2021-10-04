@@ -7,8 +7,8 @@
 class Square : public Shape
 {
 public:
-    Square(Vec2<float> center, float radius, Vec2<float> speed = Vec2<float>(0, 0), uint32_t color = kLightYellow) :
-           Shape(SquareType, center, radius, speed, color) {}
+    Square(Vec2<float> center, float radius, Vec2<float> speed = Vec2<float>(0, 0), uint32_t color = kLightYellow, int weight = 1) :
+           Shape(SquareType, center, radius, speed, color, weight) {}
     ~Square() {}
 
     virtual void Draw(Renderer* renderer, CoordinateSystem* system) override;

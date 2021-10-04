@@ -2,6 +2,7 @@
 #define _VECTOR2_HPP_INCLUDED
 
 #include <assert.h>
+#include <math.h>
 
 template <typename T>
 struct Vec2
@@ -16,8 +17,9 @@ struct Vec2
 
     Vec2 MulByCoords(const Vec2& lhs, const Vec2& rhs);
 
-    float GetLength();
+    float GetLength() const;
     void Normalize();
+    void Rotate(float alpha);
 
     T x;
     T y;
@@ -45,6 +47,12 @@ template <typename T>
 Vec2<T> operator*(float lhs, Vec2<T> rhs)
 {
     return rhs *= lhs;
+}
+
+template <typename T>
+Vec2<T> operator/(Vec2<T> lhs, float rhs)
+{
+    return lhs /= rhs;
 }
 
 template <typename T>
@@ -92,7 +100,7 @@ Vec2<T> Vec2<T>::MulByCoords(const Vec2& lhs, const Vec2& rhs)
 }
 
 template <typename T>
-float Vec2<T>::GetLength()
+float Vec2<T>::GetLength() const
 {
     return sqrt(x * x + y * y);
 }
@@ -106,6 +114,16 @@ void Vec2<T>::Normalize()
     {
         *this /= length;
     }
+}
+
+template <typename T>
+void Vec2<T>::Rotate(float alpha)
+{
+    float old_x = x;
+    float old_y = y;
+
+    x = old_x * cos(alpha) - old_y * sin(alpha);
+    y = old_x * sin(alpha) + old_y * cos(alpha);
 }
 
 #endif /* _VECTOR2_HPP_INCLUDED */
