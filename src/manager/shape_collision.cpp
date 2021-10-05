@@ -13,58 +13,63 @@ bool DetectCollisionCC(Circle* lhs, Circle* rhs)
 
     Vec2<float> centers_vec = rhs->GetCenter() - lhs->GetCenter();
 
-    return centers_vec.GetLength() <= rhs->GetRadius() + lhs->GetRadius();
+    return !IsEqual(centers_vec.GetLength(), rhs->GetRadius() + lhs->GetRadius());
 }
 
-void ResponseCollisionCC(CollisionInfo& info)
+void ResponseCollisionCC(ShapeManager* manager, Circle* first, Circle* second)
 {
-    Circle* first  = dynamic_cast<Circle*>(*info.first);
-    Circle* second = dynamic_cast<Circle*>(*info.second);
+    assert(first);
+    assert(second);
 
     Vec2<float> speed = first->GetSpeed() + second->GetSpeed();
     speed.Normalize();
 
-    speed *= sqrt(first->GetSpeed() * first->GetSpeed() / 2 + second->GetSpeed() * second->GetSpeed() / 2);
+    speed *= sqrt(first ->GetSpeed() * first ->GetSpeed() / 2 +
+                  second->GetSpeed() * second->GetSpeed() / 2);
 
-    info.manager->AddShape<Square>((first->GetCenter() + second->GetCenter()) / 2,
-                                   (first->GetRadius() + second->GetRadius()),
-                                    speed,
-                                    kLightYellow,
-                                    first->GetWeight() + second->GetWeight());
+    manager->AddShape<Square>((first->GetCenter() + second->GetCenter()) / 2,
+                               first->GetRadius() + second->GetRadius(),
+                               speed,
+                               kLightYellow,
+                               first->GetWeight() + second->GetWeight());
 
-    info.manager->GetShapes().Erase(info.first);
-    info.manager->GetShapes().Erase(info.second);
+    first->Delete();
+    second->Delete();
 }
 
-void ResponseCollisionCS(CollisionInfo& info)
+void ResponseCollisionCS(ShapeManager* manager, Circle* circle, Square* square)
 {
-    Circle* circle  = dynamic_cast<Circle*>(*info.first);
-    Square* square = dynamic_cast<Square*>(*info.second);
+    assert(circle);
+    assert(square);
 
     int m = square->GetWeight();
     Vec2<float> v1 = circle->GetSpeed();
     Vec2<float> v2 = square->GetSpeed();
+ 
     Vec2<float> v = square->GetSpeed() + circle->GetSpeed() / (square->GetWeight());
     v.Normalize();
     v *= sqrt((v1  * v1 + m * v2 * v2) / (m + 1));
     square->SetSpeed(v);
+ 
     square->SetWeight(circle->GetWeight() + square->GetWeight());
     square->SetRadius(square->GetWeight());
 
-    info.manager->GetShapes().Erase(info.first);
+    circle->Delete();
 }
 
-void ResponseCollisionSC(CollisionInfo& info)
+void ResponseCollisionSC(ShapeManager* manager, Square* square, Circle* circle)
 {
-    Swap(info.first, info.second);
-    ResponseCollisionCS(info);
+    assert(square);
+    assert(circle);
+
+    ResponseCollisionCS(manager, circle, square);
 }
 
-void ResponseCollisionSS(CollisionInfo& info)
-{
-    Square* first  = dynamic_cast<Square*>(*info.first);
-    Square* second = dynamic_cast<Square*>(*info.second);
-    
+void ResponseCollisionSS(ShapeManager* manager, Square* first, Square* second)
+{   
+    assert(first);
+    assert(second);
+
     int m1 = first->GetWeight();
     int m2 = second->GetWeight();
     Vec2<float> v1 = first->GetSpeed();
@@ -80,11 +85,11 @@ void ResponseCollisionSS(CollisionInfo& info)
 
     for (int i = 0; i < weight; ++i)
     {
-        info.manager->AddShape<Circle>(info.manager->GetCoordinateSystem()->CrossOver(center + distance_from_center), 1, speed);
+        manager->AddShape<Circle>(manager->GetCoordinateSystem()->CrossOver(center + distance_from_center), 1, speed);
         distance_from_center.Rotate(alpha);
         speed.Rotate(alpha);
     }
 
-    info.manager->GetShapes().Erase(info.first);
-    info.manager->GetShapes().Erase(info.second);
+    first->Delete();
+    second->Delete();
 }

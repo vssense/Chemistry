@@ -19,7 +19,10 @@ public:
     };
 
     Shape(ShapeType type, Vec2<float> center, float radius, Vec2<float> speed, uint32_t color, int weight) :
-          type_(type), center_(center), radius_(radius), speed_(speed), color_(color), weight_(weight) {}
+          type_(type), center_(center), radius_(radius), speed_(speed), color_(color), weight_(weight)
+    {
+        is_deleted_ = false;        
+    }
 
     virtual ~Shape() {}
     virtual void Draw(Renderer* renderer, CoordinateSystem* system) = 0;
@@ -41,6 +44,9 @@ public:
     void SetCenter(const Vec2<float>& center) { center_ = center; }
     void SetSpeed (const Vec2<float>& speed ) { speed_  = speed ; }
 
+    bool IsDeleted() { return is_deleted_; }
+    void Delete() { is_deleted_ = true; }
+
 protected:
     ShapeType type_;
     Vec2<float> center_;
@@ -48,6 +54,8 @@ protected:
     Vec2<float> speed_;
     uint32_t color_;
     int weight_;
+
+    bool is_deleted_;
 };
 
 #endif /* _SHAPE_HPP_INCLUDED */

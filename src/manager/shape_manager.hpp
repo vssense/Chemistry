@@ -11,13 +11,12 @@ class ShapeManager;
 
 struct CollisionInfo
 {
-    ShapeManager* manager;
-    List<Shape*>::Iterator first;
-    List<Shape*>::Iterator second;
+    Shape* first;
+    Shape* second;
 };
 
 typedef bool (*DetectCollisionFunc)(Shape*, Shape*);
-typedef void (*ResponseCollisionFunc)(CollisionInfo&);
+typedef void (*ResponseCollisionFunc)(ShapeManager*, Shape*, Shape*);
 
 #include "shape_collision.hpp"
 

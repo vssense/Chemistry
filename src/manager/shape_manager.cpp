@@ -22,25 +22,37 @@ void ShapeManager::DrawShapes()
 
 void ShapeManager::MoveShapes(float dt)
 {
-    std::vector<CollisionInfo> info;
     for (auto first = shapes_.Begin(); first != shapes_.End(); ++first)
     {
         auto second = first;
         ++second;
         for (; second != shapes_.End(); ++second)
         {
-            if (DetectCollision[(*first)->GetType()][(*second)->GetType()](*first, *second))
+            if (!(*first)->IsDeleted() && !(*second)->IsDeleted())
             {
-                info.push_back({this, first, second});
-                break;
+                Shape* shape1 = *first;
+                Shape* shape2 = *second;
+                if (DetectCollision[shape1->GetType()][shape2->GetType()](shape1, shape2))
+                {
+                    ResponseCollision[shape1->GetType()][shape2->GetType()](this, shape1, shape2);
+                    break;
+                }
             }
         }
     }
 
-    for (size_t i = 0; i < info.size(); ++i)
+    for (auto it = shapes_.Begin(); it != shapes_.End();)
     {
-        // printf("%d %d\n", info[i].first.IsValid(), info[i].second.IsValid());
-        ResponseCollision[(*info[i].first)->GetType()][(*info[i].second)->GetType()](info[i]);
+        if ((*it)->IsDeleted())
+        {
+            auto old_it = it;
+            ++it;
+            shapes_.Erase(old_it);
+        }
+        else
+        {
+            ++it;
+        }
     }
 
     for (auto it = shapes_.Begin(); it != shapes_.End(); ++it)
