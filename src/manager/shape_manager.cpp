@@ -32,6 +32,7 @@ void ShapeManager::MoveShapes(float dt)
             if (DetectCollision[(*first)->GetType()][(*second)->GetType()](*first, *second))
             {
                 info.push_back({this, first, second});
+                break;
             }
         }
     }
@@ -39,10 +40,7 @@ void ShapeManager::MoveShapes(float dt)
     for (size_t i = 0; i < info.size(); ++i)
     {
         // printf("%d %d\n", info[i].first.IsValid(), info[i].second.IsValid());
-        if (info[i].first.IsValid() && info[i].second.IsValid())
-        {
-            ResponseCollision[(*info[i].first)->GetType()][(*info[i].second)->GetType()](info[i]);
-        }
+        ResponseCollision[(*info[i].first)->GetType()][(*info[i].second)->GetType()](info[i]);
     }
 
     for (auto it = shapes_.Begin(); it != shapes_.End(); ++it)
@@ -56,4 +54,30 @@ void ShapeManager::DrawFrame()
 {
     renderer_->SetColor(kWhite);
     renderer_->FillRect(system_->GetRectangle());
+
+    renderer_->SetColor(kRed);
+
+    renderer_->DrawLineCS(system_, system_->GetXAxisRange().min, system_->GetYAxisRange().min,
+                                   system_->GetXAxisRange().min, system_->GetYAxisRange().max);
+
+    renderer_->DrawLineCS(system_, system_->GetXAxisRange().min, system_->GetYAxisRange().min,
+                                   system_->GetXAxisRange().max, system_->GetYAxisRange().min);
+
+    renderer_->DrawLineCS(system_, system_->GetXAxisRange().max, system_->GetYAxisRange().max,
+                                   system_->GetXAxisRange().max, system_->GetYAxisRange().min);
+                        
+    renderer_->DrawLineCS(system_, system_->GetXAxisRange().max, system_->GetYAxisRange().max,
+                                   system_->GetXAxisRange().min, system_->GetYAxisRange().max);
+}
+
+float ShapeManager::CalculateKineticEnergy()
+{
+    float kinetic_energy = 0;
+
+    for (auto it = shapes_.Begin(); it != shapes_.End(); ++it)
+    {
+        kinetic_energy += (*it)->GetSpeed() * (*it)->GetSpeed() * (*it)->GetWeight() / 2;
+    }
+
+    return kinetic_energy;
 }

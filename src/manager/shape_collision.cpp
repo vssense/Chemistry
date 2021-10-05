@@ -21,9 +21,14 @@ void ResponseCollisionCC(CollisionInfo& info)
     Circle* first  = dynamic_cast<Circle*>(*info.first);
     Circle* second = dynamic_cast<Circle*>(*info.second);
 
+    Vec2<float> speed = first->GetSpeed() + second->GetSpeed();
+    speed.Normalize();
+
+    speed *= sqrt(first->GetSpeed() * first->GetSpeed() / 2 + second->GetSpeed() * second->GetSpeed() / 2);
+
     info.manager->AddShape<Square>((first->GetCenter() + second->GetCenter()) / 2,
                                    (first->GetRadius() + second->GetRadius()),
-                                   (first->GetSpeed () + second->GetSpeed ()) / 2,
+                                    speed,
                                     kLightYellow,
                                     first->GetWeight() + second->GetWeight());
 
@@ -33,20 +38,24 @@ void ResponseCollisionCC(CollisionInfo& info)
 
 void ResponseCollisionCS(CollisionInfo& info)
 {
-    return;
     Circle* circle  = dynamic_cast<Circle*>(*info.first);
     Square* square = dynamic_cast<Square*>(*info.second);
 
+    int m = square->GetWeight();
+    Vec2<float> v1 = circle->GetSpeed();
+    Vec2<float> v2 = square->GetSpeed();
+    Vec2<float> v = square->GetSpeed() + circle->GetSpeed() / (square->GetWeight());
+    v.Normalize();
+    v *= sqrt((v1  * v1 + m * v2 * v2) / (m + 1));
+    square->SetSpeed(v);
     square->SetWeight(circle->GetWeight() + square->GetWeight());
-    square->SetRadius(circle->GetRadius() + square->GetRadius());
-    square->SetSpeed(((square->GetWeight() - 1.0) / square->GetWeight()) * square->GetSpeed() + circle->GetSpeed() / (square->GetWeight()));
-    
+    square->SetRadius(square->GetWeight());
+
     info.manager->GetShapes().Erase(info.first);
 }
 
 void ResponseCollisionSC(CollisionInfo& info)
 {
-    return;
     Swap(info.first, info.second);
     ResponseCollisionCS(info);
 }
@@ -56,11 +65,17 @@ void ResponseCollisionSS(CollisionInfo& info)
     Square* first  = dynamic_cast<Square*>(*info.first);
     Square* second = dynamic_cast<Square*>(*info.second);
     
-    int weight = first->GetWeight() + second->GetWeight();
-    float alpha = 2 * M_PI / weight;
+    int m1 = first->GetWeight();
+    int m2 = second->GetWeight();
+    Vec2<float> v1 = first->GetSpeed();
+    Vec2<float> v2 = second->GetSpeed();
 
-    Vec2<float> speed(sqrt(first->GetSpeed() * first->GetSpeed() + second->GetSpeed() * second->GetSpeed()), 0);
+    Vec2<float> speed(sqrt((m1 * v1 * v1 + m2 * v2 * v2) / (m1 + m2)), 0);
+
     Vec2<float> center = (first->GetCenter() + second->GetCenter()) / 2;
+
+    int weight = m1 + m2;
+    float alpha = 2 * M_PI / weight;
     Vec2<float> distance_from_center(1 / sin(M_PI / (weight + 1)), 0);
 
     for (int i = 0; i < weight; ++i)

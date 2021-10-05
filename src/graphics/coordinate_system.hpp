@@ -30,6 +30,9 @@ public:
     const Range&     GetXAxisRange() const { return x_axis_range_; }
     const Range&     GetYAxisRange() const { return y_axis_range_; }
 
+    void MoveXAxisRange(float dx);
+    void MoveYAxisRange(float dy);
+
 private:
     Rectangle rect_;
     Range x_axis_range_;

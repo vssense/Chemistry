@@ -24,7 +24,7 @@ typedef void (*ResponseCollisionFunc)(CollisionInfo&);
 class ShapeManager
 {
 public:
-    ShapeManager(Renderer* renderer, CoordinateSystem* system) :
+    explicit ShapeManager(Renderer* renderer, CoordinateSystem* system) :
                  renderer_(renderer), system_(system) {}
     ~ShapeManager();
 
@@ -41,7 +41,7 @@ public:
     void MoveShapes(float dt);
     List<Shape*>& GetShapes() { return shapes_; }
     CoordinateSystem* GetCoordinateSystem() { return system_; }
-
+    float CalculateKineticEnergy();
 private:
     const DetectCollisionFunc DetectCollision[Shape::ShapeNumTypes][Shape::ShapeNumTypes] =
     {

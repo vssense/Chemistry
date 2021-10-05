@@ -4,32 +4,35 @@
 #include "shapes/circle.hpp"
 #include "shapes/square.hpp"
 #include "manager/shape_manager.hpp"
+#include "graphics/graph.hpp"
 
 const float kCoordinateSystemWidth  = 100;
 const float kCoordinateSystemHeight = 100;
-// TODO: 1. add chemical reactions
+// TODO: 1. add chemical reactions +
 //       2. add event manager
 //       3. add buttons
 //       4. add graphics
-//       5. ShapeManeger : public Shape
+//       5. ShapeManager : public Shape
 int main()
 {
     Window window{};
     Renderer renderer(&window);
 
-    CoordinateSystem system({ 0, kCoordinateSystemWidth },
-                            { 0, kCoordinateSystemHeight },
-                            { 0, 0, kWindowWidth, kWindowHeight });
+    CoordinateSystem manager_system({0, kCoordinateSystemWidth}, {0, kCoordinateSystemHeight},
+                                    {10, 10, kWindowWidth / 2 - 20, kWindowHeight - 20});
 
-    ShapeManager manager(&renderer, &system);
+    ShapeManager manager(&renderer, &manager_system);
 
-    manager.AddShape<Square>(Vec2<float>(10, 10), 7, Vec2<float>(1, 1), kLightYellow, 14);
-    manager.AddShape<Square>(Vec2<float>(80, 80), 6, Vec2<float>(-1, -1), kLightYellow, 12);
+    manager.AddShape<Square>(Vec2<float>(10, 10), 7, Vec2<float>(5, 5), kLightYellow, 14);
+    manager.AddShape<Square>(Vec2<float>(90, 90), 7, Vec2<float>(-5, -5), kLightYellow, 14);
 
-    // for (int i = 0; i < 15; ++i)
-    // {
-    //     manager.AddShape<Circle>(Vec2<float>(10 + 4 * i, 10 + 4 * i), 1, Vec2<float>((rand() % 3) - 1, (rand() % 3) - 1));
-    // }
+    float time = 0;
+    float dt = 0.01;
+
+    CoordinateSystem graph_system({-1, 30}, {-1, 100},
+                                  {kWindowWidth / 2 + 10, 10, kWindowWidth / 2 - 20, kWindowHeight / 2 - 20});
+    
+    Graph graph((graph_system.GetXAxisRange().max - graph_system.GetXAxisRange().min) / dt);
 
     bool is_running = true;
 
@@ -50,7 +53,11 @@ int main()
 
         manager.DrawFrame();
         manager.DrawShapes();
-        manager.MoveShapes(0.005);
+        manager.MoveShapes(dt);
+        time += dt;
+        renderer.DrawCoordinateSystem(&graph_system);
+        graph.AddPoint(Vec2<float>(time, manager.CalculateKineticEnergy() / 10), &graph_system, dt);
+        graph.Draw(&renderer, &graph_system);
 
         renderer.Present();
         // window.SetTitleFPS(CLOCKS_PER_SEC / (clock() - start + 1));

@@ -5,7 +5,11 @@ template <typename T>
 class List
 {
 public:
-    List() : head_(nullptr), tail_(nullptr) {}
+    List() : head_(nullptr), tail_(nullptr)
+    {
+        size_ = 0;
+    }
+
     ~List()
     {
         for (auto it = Begin(); it != End();)
@@ -14,6 +18,8 @@ public:
             ++it;
             Erase(old_it);
         }
+
+        size_ = 0;
     }
 
 private:
@@ -52,11 +58,6 @@ public:
         {
             return node_->key;
         }
-
-        bool IsValid()
-        {
-            return node_ != nullptr;
-        }
         
         friend bool operator != (const Iterator& lhs, const Iterator& rhs)
         {
@@ -83,6 +84,7 @@ public:
     void PushBack(const T& key);
     void InsertAfter(const Iterator& it, const T& key);
     void Erase(Iterator& it);
+    size_t Size() { return size_; }
 
     Iterator Begin()
     {
@@ -97,11 +99,14 @@ public:
 private:
     Node* head_;
     Node* tail_;
+    size_t size_;
 };
 
 template <typename T>
 void List<T>::PushBack(const T& key)
 {
+    ++size_;
+
     if (tail_ == nullptr)
     {
         head_ = tail_ = new Node(key);
@@ -117,6 +122,8 @@ template <typename T>
 void List<T>::InsertAfter(const Iterator& it, const T& key)
 {
     assert(it.node_);
+    ++size_;
+
     it.node_->next = new Node(key, it.node_->next);
     it.node_->next->prev = it.node_;
     
@@ -135,6 +142,7 @@ template <typename T>
 void List<T>::Erase(Iterator& it)
 {
     assert(it.node_);
+    --size_;
 
     Node* node = it.node_;
     if (node == head_)
