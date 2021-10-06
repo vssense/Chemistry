@@ -3,7 +3,7 @@
 void Graph::AddPoint(const Vec2<float>& point, CoordinateSystem* system, float dt)
 {
     points_.PushBack(point);
-    system->SetYAxisRange({0, 2 * point.y});
+    system->SetYAxisRange({-2 * point.y / 10, 2 * point.y});
     
     if (points_.Size() > max_num_points_)
     {

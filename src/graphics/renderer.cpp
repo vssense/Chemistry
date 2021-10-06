@@ -62,7 +62,7 @@ void Renderer::SetPixel(float x, float y)
 
 void Renderer::Clear()
 {
-    SetColor(kBlack);
+    SetColor(kWhite);
     assert(!SDL_RenderClear(renderer_));
 }
 

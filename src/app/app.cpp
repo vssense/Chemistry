@@ -3,12 +3,27 @@
 class IncreaseTemperature : public IFunctor
 {
 public:
-    IncreaseTemperature() {}
+    IncreaseTemperature(ShapeManager* manager) : manager_(manager) {}
     ~IncreaseTemperature() {}
     virtual void Execute() override
     {
-        printf("Click!\n");
+        manager_->ChangeTemperature(1.5);
     }
+private:
+    ShapeManager* manager_;
+};
+
+class DecreaseTemperature : public IFunctor
+{
+public:
+    DecreaseTemperature(ShapeManager* manager) : manager_(manager) {}
+    ~DecreaseTemperature() {}
+    virtual void Execute() override
+    {
+        manager_->ChangeTemperature(1 / 1.5);
+    }
+private:
+    ShapeManager* manager_;
 };
 
 void App::operator () ()
@@ -25,11 +40,13 @@ void App::operator () ()
     float dt = 0.01;
 
     ButtonManager button_manager(&renderer);
-    IncreaseTemperature red_button_functor;
+    IncreaseTemperature red_button_functor(&shape_manager);
+    DecreaseTemperature blue_button_functor(&shape_manager);
     button_manager.AddButton(kRedButtonRect, reinterpret_cast<IFunctor*>(&red_button_functor), kRed);
+    button_manager.AddButton(kBlueButtonRect, reinterpret_cast<IFunctor*>(&blue_button_functor), kBlue);
 
-    CoordinateSystem graph_system({-1, 30}, {-1, 1000}, kGraphSystem);
-    Graph graph((graph_system.GetXAxisRange().max - graph_system.GetXAxisRange().min) / dt);
+    CoordinateSystem graph_system({-1, 30}, {-10, 1000}, kGraphSystem);
+    Graph graph((graph_system.GetXAxisRange().max) / dt);
 
     bool is_running = true;
 
@@ -48,6 +65,8 @@ void App::operator () ()
             }
         }
 
+        clock_t start = clock();
+
         renderer.Clear();
 
         shape_manager.DrawFrame();
@@ -58,8 +77,10 @@ void App::operator () ()
         graph.AddPoint(Vec2<float>(time, shape_manager.CalculateKineticEnergy()), &graph_system, dt); //FIXME: scaling graph
         graph.Draw(&renderer, &graph_system);
 
-        // button_manager.DrawButtons();
+        button_manager.DrawButtons();
 
         renderer.Present();
+
+        dt = 2 * (clock() - start + 0.0) / (CLOCKS_PER_SEC);
     }
 }

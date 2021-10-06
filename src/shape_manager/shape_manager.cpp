@@ -83,3 +83,12 @@ float ShapeManager::CalculateKineticEnergy()
 
     return kinetic_energy;
 }
+
+void ShapeManager::ChangeTemperature(float k)
+{
+    for (auto it = shapes_.Begin(); it != shapes_.End(); ++it)
+    {
+        Shape* shape = *it;
+        shape->SetSpeed(sqrt(k) * shape->GetSpeed());
+    }
+}

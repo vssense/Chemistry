@@ -16,7 +16,8 @@ const float kCoordinateSystemHeight = 100;
 
 const Rectangle kShapeManagerSystem = {10, 10, kWindowWidth / 2 - 20, kWindowHeight - 20};
 const Rectangle kGraphSystem        = {kWindowWidth / 2 + 10, 10, kWindowWidth / 2 - 20, kWindowHeight / 2 - 20};
-const Rectangle kRedButtonRect      = {3 * kWindowWidth / 4, 3 * kWindowHeight / 4, 50, 50};
+const Rectangle kRedButtonRect      = {3 * kWindowWidth / 4 - 100, 3 * kWindowHeight / 4, 150, 150};
+const Rectangle kBlueButtonRect     = {3 * kWindowWidth / 4 + 100, 3 * kWindowHeight / 4, 150, 150};
 
 class App
 {

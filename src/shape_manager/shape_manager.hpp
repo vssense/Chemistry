@@ -38,9 +38,12 @@ public:
     void DrawShapes();
     void DrawFrame();
     void MoveShapes(float dt);
+    void ChangeTemperature(float k);
+
     List<Shape*>& GetShapes() { return shapes_; }
     CoordinateSystem* GetCoordinateSystem() { return system_; }
     float CalculateKineticEnergy();
+
 private:
     const DetectCollisionFunc DetectCollision[Shape::ShapeNumTypes][Shape::ShapeNumTypes] =
     {
