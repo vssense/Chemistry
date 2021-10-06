@@ -3,10 +3,13 @@
 void Graph::AddPoint(const Vec2<float>& point, CoordinateSystem* system, float dt)
 {
     points_.PushBack(point);
+    system->SetYAxisRange({0, 2 * point.y});
+    
     if (points_.Size() > max_num_points_)
     {
         auto it = points_.Begin();
         points_.Erase(it);
+
         system->MoveXAxisRange(dt);
     }
 }

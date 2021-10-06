@@ -98,6 +98,18 @@ void Renderer::FillRect(const Rectangle& rect)
     assert(!SDL_RenderFillRect(renderer_, &rectangle));
 }
 
+void Renderer::DrawRect(const Rectangle& rect)
+{
+    float x0 = rect.x0;
+    float y0 = rect.y0;
+    float x1 = rect.x0 + rect.w;
+    float y1 = rect.y0 + rect.h;
+    DrawLine(x0, y0, x1, y0);
+    DrawLine(x0, y0, x0, y1);
+    DrawLine(x1, y1, x1, y0);
+    DrawLine(x1, y1, x0, y1);
+}
+
 void Renderer::DrawCoordinateSystem(CoordinateSystem* system)
 {
     assert(system);

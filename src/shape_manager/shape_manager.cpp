@@ -69,17 +69,7 @@ void ShapeManager::DrawFrame()
 
     renderer_->SetColor(kRed);
 
-    renderer_->DrawLineCS(system_, system_->GetXAxisRange().min, system_->GetYAxisRange().min,
-                                   system_->GetXAxisRange().min, system_->GetYAxisRange().max);
-
-    renderer_->DrawLineCS(system_, system_->GetXAxisRange().min, system_->GetYAxisRange().min,
-                                   system_->GetXAxisRange().max, system_->GetYAxisRange().min);
-
-    renderer_->DrawLineCS(system_, system_->GetXAxisRange().max, system_->GetYAxisRange().max,
-                                   system_->GetXAxisRange().max, system_->GetYAxisRange().min);
-                        
-    renderer_->DrawLineCS(system_, system_->GetXAxisRange().max, system_->GetYAxisRange().max,
-                                   system_->GetXAxisRange().min, system_->GetYAxisRange().max);
+    renderer_->DrawRect(system_->GetRectangle());
 }
 
 float ShapeManager::CalculateKineticEnergy()

@@ -23,13 +23,7 @@ const float kEdgesAngle = M_PI / 8;
 const float kEdgesNormalising = 30;
 const size_t kByteSize = 8;
 
-struct Rectangle
-{
-    float x0;
-    float y0;
-    float w;
-    float h;
-};
+#include "../math/rectangle.hpp"
 
 class CoordinateSystem;
 
@@ -46,6 +40,7 @@ public:
     void DrawCoordinateSystem(CoordinateSystem* system);
 
     void FillRect(const Rectangle& rect);
+    void DrawRect(const Rectangle& rect);
     void SetPixel(float x, float y);
     void SetColor(uint32_t color);
     void Clear();

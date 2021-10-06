@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-#include "renderer.hpp"
+#include "../math/rectangle.hpp"
 #include "../math/vector2.hpp"
 
 const float kStep = 0.01;
@@ -29,6 +29,9 @@ public:
     const Rectangle& GetRectangle () const { return rect_; }
     const Range&     GetXAxisRange() const { return x_axis_range_; }
     const Range&     GetYAxisRange() const { return y_axis_range_; }
+
+    void SetXAxisRange(Range x_axis_range) { x_axis_range_ = x_axis_range; }
+    void SetYAxisRange(Range y_axis_range) { y_axis_range_ = y_axis_range; }
 
     void MoveXAxisRange(float dx);
     void MoveYAxisRange(float dy);
